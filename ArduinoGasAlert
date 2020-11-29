@@ -31,11 +31,9 @@ void loop()
       http.end();
 
       Serial.println("connection ended");
+      
+    }
 
-  }else {
-    
-    Serial.println("connection failed");
-    
   }
   
   delay(5000); 
