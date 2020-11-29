@@ -1,0 +1,43 @@
+#include <esp8266wifi.h>
+#include <esp8266httpclient.h>
+
+int sensorRead = 0;
+
+const char* ssid = "xxxx";
+const char* password = "xxxx";
+
+void setup()
+{
+  WiFi.begin(ssid, password);
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+ 
+  sensorRead = analogRead(A0);
+  
+  if(sensorRead > 159) {
+    
+    while (WiFi.status() != WL_CONNECTED) {
+      
+      HTTPClient http;  
+      Serial.println("connection begin");
+       
+      http.begin("https://api.callmebot.com/whatsapp.php?phone=+5511964427359&text=FOGO!&apikey=224879");
+      int httpCode = http.GET(); 
+      
+      http.end();
+
+      Serial.println("connection ended");
+
+  }else {
+    
+    Serial.println("connection failed");
+    
+  }
+  
+  delay(5000); 
+  
+}
